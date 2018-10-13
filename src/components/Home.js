@@ -1,9 +1,10 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
 import { compose } from 'recompose';
 import { withStyles } from '@material-ui/core/styles';
 import PollModal from './CreatePoll'
-import GetPolls from './GetPolls'
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
 
 
 
@@ -16,6 +17,7 @@ class HomePage extends Component {
     super(props);
 
     this.state = {
+      polls: null,
       users: null,
       show: false
     };
@@ -30,21 +32,39 @@ class HomePage extends Component {
   };
 
   componentDidMount() {
-    const { onSetUsers } = this.props;
-
+    const { onSetUsers,onSetPolls } = this.props;
+    
     db.onceGetUsers().then(snapshot =>
       onSetUsers(snapshot.val())
     );
+    db.onceGetPolls().then(snapshot =>
+      // this.setState({polls: snapshot.val()})
+      onSetPolls(snapshot.val())
+    );
+    
   }
 
   render() {
-    const { users } = this.props;
+    // const polls = this.state.polls
+    const { users, polls } = this.props;
     return (
       <div>
         <h1>Home</h1>
-        <p>The Home Page is accessible by every signed in user.</p>
-        { !!users && <UserList users={users} /> }
-        <GetPolls />
+        {/* <p>The Home Page is accessible by every signed in user.</p>
+        { !!users && <UserList users={users} /> } */}
+        {/* <GetPolls /> */}
+        {!!polls && Object.keys(polls).map(key => {
+            return (
+              <List key={key}>
+                <ListItem>Author: {polls[key].author}</ListItem>
+                <ListItem>Nome da Campanha: {polls[key].pollName}</ListItem>
+                <ListItem>Op1: {polls[key].pollOptions.pollOption1}</ListItem>
+                <ListItem>Op2: {polls[key].pollOptions.pollOption2}</ListItem>
+                <ListItem>Op3: {polls[key].pollOptions.pollOption3}</ListItem>
+              </List>
+            )
+          }
+          )}
         <PollModal />
       </div>
     );
@@ -74,10 +94,12 @@ const UserList = ({ users }) =>
 
 const mapStateToProps = (state) => ({
   users: state.userState.users,
+  polls: state.pollState.polls,
 });
 
 const mapDispatchToProps = (dispatch) => ({
   onSetUsers: (users) => dispatch({ type: 'USERS_SET', users }),
+  onSetPolls: (polls) => dispatch({ type: 'POLLS_SET', polls }),
 });
 
 const authCondition = (authUser) => !!authUser;

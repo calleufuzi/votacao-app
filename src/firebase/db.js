@@ -13,3 +13,6 @@ export const onceGetUsers = () =>
 
 export const doCreatePoll = (data) => 
   db.ref().update(data);  
+
+  export const onceGetPolls = () =>
+  db.ref('polls').once('value');  
