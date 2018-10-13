@@ -3,12 +3,20 @@ import {
   Link,
   withRouter,
 } from 'react-router-dom';
+import Typography from '@material-ui/core/Typography';
+import TextField from '@material-ui/core/TextField';
+import Card from '@material-ui/core/Card';
+import CardActions from '@material-ui/core/CardActions';
+import CardContent from '@material-ui/core/CardContent';
+import Button from '@material-ui/core/Button';
+import PersonAddIcon from '@material-ui/icons/PersonAdd';
+import Avatar from '@material-ui/core/Avatar';
+
 import { auth, db } from '../firebase';
 import * as routes from '../constants/routes';
 
 const SignUpPage = ({ history }) =>
   <div>
-    <h1>SignUp</h1>
     <SignUpForm history={history} />
   </div>
 
@@ -78,50 +86,118 @@ class SignUpForm extends Component {
       passwordOne === '' ||
       email === '' ||
       username === '';
+      const styles = {
+        card: {
+          minWidth: 320,
+          display: 'flex',
+          marginTop: 64,
+          alignItems: 'center',
+          flexDirection: 'column',
+        },
+        title: {
+          fontSize: 14,
+        },
+        pos: {
+          marginBottom: 12,
+        },
+        container: {
+          display: 'flex',
+          flexWrap: 'wrap',
+          justifyContent: 'center',
+          width:'100%', 
+          marginTop: 14
+        },
+        avatar: {
+          margin: 10,
+          width:60,
+          height:60,
+          backgroundColor: 'teal'
+        },
+        row:{
+          display: 'flex',
+          justifyContent: 'center',
+        },
+        form:{
+          width: '100%',
+          marginTop: 8
+        }
+      };  
 
 
     return (
-      <form onSubmit={this.onSubmit}>
-        <input
-          value={username}
-          onChange={event => this.setState(byPropKey('username', event.target.value))}
-          type="text"
-          placeholder="Full Name"
-        />
-        <input
-          value={email}
-          onChange={event => this.setState(byPropKey('email', event.target.value))}
-          type="text"
-          placeholder="Email Address"
-        />
-        <input
-          value={passwordOne}
-          onChange={event => this.setState(byPropKey('passwordOne', event.target.value))}
-          type="password"
-          placeholder="Password"
-        />
-        <input
-          value={passwordTwo}
-          onChange={event => this.setState(byPropKey('passwordTwo', event.target.value))}
-          type="password"
-          placeholder="Confirm Password"
-        />
-        <button disabled={isInvalid} type="submit">
-          Sign Up
-        </button>
-
-        { error && <p>{error.message}</p> }        
-      </form>
+      <div style={styles.container}>
+        <Card style={styles.card}>
+          <CardContent>
+            <div style={styles.row}>
+              <Avatar style={styles.avatar} >
+                <PersonAddIcon fontSize="large" />
+              </Avatar>            
+            </div>      
+            <Typography color="textPrimary" variant="h5" align="center">SingUp</Typography>
+            <form onSubmit={this.onSubmit}>
+            <TextField
+                label="Nome Completo"
+                value={username}
+                onChange={event => this.setState(byPropKey('username', event.target.value))}
+                margin="normal"
+                variant="outlined"
+                type="text"
+                name="Nome Completo"
+                fullWidth
+              /> 
+            <TextField
+                label="Endereço de email"
+                value={email}
+                onChange={event => this.setState(byPropKey('email', event.target.value))}
+                margin="normal"
+                variant="outlined"
+                type="email"
+                name="Endereço de email"
+                autoComplete="email"
+                fullWidth
+              />   
+            <TextField
+                label="Senha"
+                value={passwordOne}
+                onChange={event => this.setState(byPropKey('passwordOne', event.target.value))}
+                margin="normal"
+                variant="outlined"
+                type="password"
+                name="Senha 1"
+                fullWidth
+              />  
+            <TextField
+                label="Confirme a Senha"
+                value={passwordTwo}
+                onChange={event => this.setState(byPropKey('passwordTwo', event.target.value))}
+                margin="normal"
+                variant="outlined"
+                type="password"
+                name="Senha 2"
+                fullWidth
+              />             
+              <div style={styles.container}>
+                <Link to={routes.LANDING}> <Button  type="submit" color="secondary" size="large">Cancelar</Button></Link>
+                <Button  disabled={isInvalid} type="submit" color="primary" size="large">Sign Up</Button>            
+              </div>   
+              { error && <p>{error.message}</p> }         
+            </form>                                         
+          </CardContent>
+          <CardActions>
+  
+          </CardActions>
+        </Card>  
+      </div>
     );
   }
 }
 
 const SignUpLink = () =>
-  <p>
+  <Typography>
     Don't have an account?
     {' '}
     <Link to={routes.SIGN_UP}>Sign Up</Link>
-  </p>
+  </Typography>
 
 export default withRouter(SignUpPage);
 

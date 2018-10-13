@@ -1,35 +1,62 @@
-import React from 'react';
-import {
-  BrowserRouter as Router,
-  Route,
-} from 'react-router-dom';
+import React, { Component } from "react";
+import { BrowserRouter as Router, Route } from "react-router-dom";
+import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 
-import Navigation from './Navigation';
-import LandingPage from './Landing';
-import SignUpPage from './SignUp';
-import SignInPage from './SignIn';
-import PasswordForgetPage from './PasswordForget';
-import HomePage from './Home';
-import AccountPage from './Account';
-
-import * as routes from '../constants/routes';
-import withAuthentication from './withAuthentication';
+import Navigation from "./Navigation";
+import LandingPage from "./Landing";
+import SignUpPage from "./SignUp";
+import SignInPage from "./SignIn";
+import PasswordForgetPage from "./PasswordForget";
+import HomePage from "./Home";
+import AccountPage from "./Account";
 
 
-const App = () =>
-  <Router>
-    <div>
-      <Navigation />
+import * as routes from "../constants/routes";
+import withAuthentication from "./withAuthentication";
 
-      <hr/>
+const theme = createMuiTheme({
+  palette: {
+    primary: {
+      dark: '#00796B',
+      light: '#B2DFDB',
+      main: '#009688',
+      contrastText: '#FFF',
+      textPrimary: '#212121',
 
-      <Route exact path={routes.LANDING} component={LandingPage} />
-      <Route exact path={routes.SIGN_UP} component={SignUpPage} />
-      <Route exact path={routes.SIGN_IN} component={SignInPage} />
-      <Route exact path={routes.PASSWORD_FORGET} component={PasswordForgetPage} />
-      <Route exact path={routes.HOME} component={HomePage} />
-      <Route exact path={routes.ACCOUNT} component={AccountPage} />
-    </div>
-  </Router>
+    },
+    secondary: {
+      main: '#f44336',
+      contrastText: '#212121',
+      secondaryText: '#757575'
+    },
+  },
+  typography: {
+    useNextVariants: true,
+  },
+});
+
+class App extends Component {
+  render() {
+    return (
+      <MuiThemeProvider theme={theme}>
+        <Router>
+          <div>
+            <Navigation />
+            <Route exact path={routes.LANDING} component={LandingPage} />
+            <Route exact path={routes.SIGN_UP} component={SignUpPage} />
+            <Route exact path={routes.SIGN_IN} component={SignInPage} />
+            <Route
+              exact
+              path={routes.PASSWORD_FORGET}
+              component={PasswordForgetPage}
+            />
+            <Route exact path={routes.HOME} component={HomePage} />
+            <Route exact path={routes.ACCOUNT} component={AccountPage} />
+          </div>
+        </Router>
+      </MuiThemeProvider>
+    );
+  }
+}
 
 export default withAuthentication(App);
