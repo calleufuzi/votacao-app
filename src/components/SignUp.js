@@ -86,42 +86,42 @@ class SignUpForm extends Component {
       passwordOne === '' ||
       email === '' ||
       username === '';
-      const styles = {
-        card: {
-          minWidth: 320,
-          display: 'flex',
-          marginTop: 64,
-          alignItems: 'center',
-          flexDirection: 'column',
-        },
-        title: {
-          fontSize: 14,
-        },
-        pos: {
-          marginBottom: 12,
-        },
-        container: {
-          display: 'flex',
-          flexWrap: 'wrap',
-          justifyContent: 'center',
-          width:'100%', 
-          marginTop: 14
-        },
-        avatar: {
-          margin: 10,
-          width:60,
-          height:60,
-          backgroundColor: 'teal'
-        },
-        row:{
-          display: 'flex',
-          justifyContent: 'center',
-        },
-        form:{
-          width: '100%',
-          marginTop: 8
-        }
-      };  
+    const styles = {
+      card: {
+        minWidth: 320,
+        display: 'flex',
+        marginTop: 64,
+        alignItems: 'center',
+        flexDirection: 'column',
+      },
+      title: {
+        fontSize: 14,
+      },
+      pos: {
+        marginBottom: 12,
+      },
+      container: {
+        display: 'flex',
+        flexWrap: 'wrap',
+        justifyContent: 'center',
+        width:'100%', 
+        marginTop: 14
+      },
+      avatar: {
+        margin: 10,
+        width:60,
+        height:60,
+        backgroundColor: 'teal'
+      },
+      row:{
+        display: 'flex',
+        justifyContent: 'center',
+      },
+      form:{
+        width: '100%',
+        marginTop: 8
+      }
+    };  
 
 
     return (

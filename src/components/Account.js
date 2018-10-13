@@ -6,8 +6,14 @@ import { PasswordForgetForm } from './PasswordForget';
 import PasswordChangeForm from './PasswordChange';
 import withAuthorization from './withAuthorization';
 
+const styles = {
+  container: {
+    display: 'flex',
+    alignItems: 'center',
+  },
+}
 const AccountPage = ({ authUser }) =>
-  <div>
+  <div style={styleMedia.container}>
     <h1>Account: {authUser.email}</h1>
     <PasswordForgetForm />
     <PasswordChangeForm />

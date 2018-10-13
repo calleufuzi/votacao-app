@@ -5,7 +5,6 @@ import { auth } from '../firebase';
 import * as routes from '../constants/routes';
 
 import Card from '@material-ui/core/Card';
-import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
@@ -70,7 +69,7 @@ class PasswordForgetForm extends Component {
         flexWrap: 'wrap',
         justifyContent: 'center',
         width:'100%', 
-        marginTop: 14
+        marginTop: 14,
       },
       avatar: {
         margin: 10,
