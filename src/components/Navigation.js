@@ -10,14 +10,14 @@ import Person from '@material-ui/icons/Person';
 import IconButton from '@material-ui/core/IconButton';
 import HomeIcon from '@material-ui/icons/Home';
 import MenuIcon from '@material-ui/icons/Menu';
+import BarChartIcon from '@material-ui/icons/BarChart';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
-import List from '@material-ui/core/List';
-import Divider from '@material-ui/core/Divider';
 import Drawer from '@material-ui/core/Drawer';
-
-
-
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
+import ListItemText from '@material-ui/core/ListItemText';
 
 import SignOutButton from './SignOut';
 import * as routes from '../constants/routes';
@@ -80,21 +80,35 @@ class NavigationAuth extends Component {
 
     const sideList = (
       <div style={styles.list}>
-        <List><Link to={routes.LANDING}>Landing</Link></List>
-        <Divider />
-        <List><Link to={routes.HOME}>Home</Link></List>
-        <Divider />
-        <List><Link to={routes.ACCOUNT}>Account</Link></List>
-        <Divider />
-        <SignOutButton />
+        <List component="nav">
+          <Link to={routes.LANDING}>
+            <ListItem button>
+              <ListItemIcon>
+                <HomeIcon />
+              </ListItemIcon>
+              <ListItemText inset primary="Landing" />
+            </ListItem>  
+          </Link>   
+          <Link to={routes.HOME}>
+            <ListItem button>
+              <ListItemIcon>
+                <BarChartIcon />
+              </ListItemIcon>
+              <ListItemText inset primary="Home" />
+            </ListItem>  
+          </Link>
+          <Link to={routes.ACCOUNT}>
+            <ListItem button>
+              <ListItemIcon>
+                <Person />
+              </ListItemIcon>
+              <ListItemText inset primary="Acount" />
+            </ListItem>  
+          </Link>
+          <SignOutButton />
+        </List>
       </div>
     );
-{/* <ul>
-  <li><Link to={routes.LANDING}>Landing</Link></li>
-  <li><Link to={routes.HOME}>Home</Link></li>
-  <li><Link to={routes.ACCOUNT}>Account</Link></li>
-  <li><SignOutButton /></li>
-</ul> */}
     return (     
       <div style={styles.root}>
       <Drawer open={this.state.left} onClose={this.toggleDrawer('left', false)}>
