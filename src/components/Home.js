@@ -1,6 +1,11 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { compose } from 'recompose';
+import { withStyles } from '@material-ui/core/styles';
+import PollModal from './CreatePoll'
+
+
+
 
 import withAuthorization from './withAuthorization';
 import { db } from '../firebase';
@@ -11,8 +16,17 @@ class HomePage extends Component {
 
     this.state = {
       users: null,
+      show: false
     };
   }
+
+  showModal = () => {
+    this.setState({ show: true });
+  };
+
+  hideModal = () => {
+    this.setState({ show: false });
+  };
 
   componentDidMount() {
     const { onSetUsers } = this.props;
@@ -23,17 +37,28 @@ class HomePage extends Component {
   }
 
   render() {
-    const { users } = this.props;
+    const { users, classes } = this.props;
     return (
       <div>
         <h1>Home</h1>
         <p>The Home Page is accessible by every signed in user.</p>
         { !!users && <UserList users={users} /> }
+        <PollModal />
       </div>
     );
   }
 }
 
+const styles = theme => ({
+  button: {
+    margin: theme.spacing.unit,
+  },
+  fab: {
+    position: 'absolute',
+    bottom: theme.spacing.unit * 2,
+    right: theme.spacing.unit * 2,
+  },
+});
 
 const UserList = ({ users }) =>
   <div>
@@ -56,6 +81,7 @@ const mapDispatchToProps = (dispatch) => ({
 const authCondition = (authUser) => !!authUser;
 
 export default compose(
+  withStyles(styles),
   withAuthorization(authCondition),
   connect(mapStateToProps, mapDispatchToProps)
 )(HomePage);
