@@ -68,7 +68,6 @@ class PasswordForgetForm extends Component {
         display: 'flex',
         flexWrap: 'wrap',
         justifyContent: 'center',
-        width:'100%', 
         marginTop: 14,
       },
       avatar: {

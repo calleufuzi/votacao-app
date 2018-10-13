@@ -123,7 +123,6 @@ class SignUpForm extends Component {
       }
     };  
 
-
     return (
       <div style={styles.container}>
         <Card style={styles.card}>

@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { compose } from 'recompose';
 import { withStyles } from '@material-ui/core/styles';
 import PollModal from './CreatePoll'
+import GetPolls from './GetPolls'
 
 
 
@@ -37,12 +38,13 @@ class HomePage extends Component {
   }
 
   render() {
-    const { users, classes } = this.props;
+    const { users } = this.props;
     return (
       <div>
         <h1>Home</h1>
         <p>The Home Page is accessible by every signed in user.</p>
         { !!users && <UserList users={users} /> }
+        <GetPolls />
         <PollModal />
       </div>
     );

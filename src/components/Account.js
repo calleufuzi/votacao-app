@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment} from 'react';
 import { connect } from 'react-redux';
 import { compose } from 'recompose';
 
@@ -8,16 +8,20 @@ import withAuthorization from './withAuthorization';
 
 const styles = {
   container: {
-    display: 'flex',
     alignItems: 'center',
   },
 }
-const AccountPage = ({ authUser }) =>
-  <div style={styleMedia.container}>
-    <h1>Account: {authUser.email}</h1>
-    <PasswordForgetForm />
-    <PasswordChangeForm />
-  </div>
+const AccountPage = ({ authUser }) => {
+  return (
+    <Fragment>
+      <div style={styles.container}>
+        {/* <h1>Account: {authUser.email}</h1> */}
+        <PasswordForgetForm />
+        <PasswordChangeForm />
+      </div>
+    </Fragment>
+  )
+}
 
 const mapStateToProps = (state) => ({
   authUser: state.sessionState.authUser,
