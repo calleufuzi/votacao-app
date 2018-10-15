@@ -1,11 +1,16 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { compose } from 'recompose';
 import { withStyles } from '@material-ui/core/styles';
 import PollModal from './CreatePoll'
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
-
+import Radio from '@material-ui/core/Radio';
+import Grid from '@material-ui/core/Grid';
+import FormControl from '@material-ui/core/FormControl';
+import FormLabel from '@material-ui/core/FormLabel';
+import RadioGroup from '@material-ui/core/RadioGroup';
+import FormControlLabel from '@material-ui/core/FormControlLabel'
 
 
 
@@ -19,7 +24,8 @@ class HomePage extends Component {
     this.state = {
       polls: null,
       users: null,
-      show: false
+      show: false,
+      value: ''
     };
   }
 
@@ -30,6 +36,9 @@ class HomePage extends Component {
   hideModal = () => {
     this.setState({ show: false });
   };
+  handleChange = event => {
+    this.setState({ value: event.target.value });
+  };
 
   componentDidMount() {
     const { onSetUsers,onSetPolls } = this.props;
@@ -38,29 +47,45 @@ class HomePage extends Component {
       onSetUsers(snapshot.val())
     );
     db.onceGetPolls().then(snapshot =>
-      // this.setState({polls: snapshot.val()})
       onSetPolls(snapshot.val())
     );
     
   }
 
   render() {
-    // const polls = this.state.polls
     const { users, polls } = this.props;
     return (
       <div>
         <h1>Home</h1>
         {/* <p>The Home Page is accessible by every signed in user.</p>
         { !!users && <UserList users={users} /> } */}
-        {/* <GetPolls /> */}
         {!!polls && Object.keys(polls).map(key => {
             return (
               <List key={key}>
                 <ListItem>Author: {polls[key].author}</ListItem>
-                <ListItem>Nome da Campanha: {polls[key].pollName}</ListItem>
-                <ListItem>Op1: {polls[key].pollOptions.pollOption1}</ListItem>
-                <ListItem>Op2: {polls[key].pollOptions.pollOption2}</ListItem>
-                <ListItem>Op3: {polls[key].pollOptions.pollOption3}</ListItem>
+                <ListItem> 
+                  {
+                    <FormControl component="fieldset">
+                      <FormLabel component="legend">{polls[key].pollName}</FormLabel>
+                      <RadioGroup
+                              aria-label={polls[key].pollOptions}
+                              name={polls[key].pollName}
+                              value={this.state.value}
+                              onChange={this.handleChange}
+                            >
+                      { 
+                        Object.keys(polls[key].pollOptions).map(k => {
+                          console.log(polls[key].pollOptions[k].name)
+                          return(                   
+                              <FormControlLabel key={k} value={polls[key].pollOptions[k].name} control={<Radio />} label={polls[key].pollOptions[k].name} /> 
+                            )
+                        })     
+                      }      
+                        </RadioGroup>          
+                    </FormControl>                    
+
+                 }
+                </ListItem>
               </List>
             )
           }

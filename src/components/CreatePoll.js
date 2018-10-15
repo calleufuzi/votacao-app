@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import firebase from 'firebase/app';
+import { connect } from 'react-redux';
+import { compose } from 'recompose';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import Dialog from '@material-ui/core/Dialog';
@@ -13,7 +15,7 @@ import Typography from '@material-ui/core/Typography';
 import { db } from '../firebase';
 
 
-
+//  Estados Iniciais
 const INITIAL_STATE = {
   pollName: '',
   pollOption1: '',
@@ -21,7 +23,9 @@ const INITIAL_STATE = {
   pollOption3: '',
   open: false,
   error: null,
+  polls: null,
 };
+
 const byPropKey = (propertyName, value) => () => ({
   [propertyName]: value,
 });
@@ -30,11 +34,8 @@ class CreatePoll extends Component {
   constructor(props) {
     super(props);
 
-    this.state = { ...INITIAL_STATE };
+    this.state = { ...INITIAL_STATE};
   }
-  state = {
-    open: false,
-  };
 
   handleClickOpen = () => {
     this.setState({ open: true });
@@ -52,6 +53,7 @@ class CreatePoll extends Component {
       pollOption3
     } = this.state;
 
+    const {onSetPolls } = this.props;
     const authUser = firebase.auth().currentUser;
 
     var postData = {
@@ -59,17 +61,27 @@ class CreatePoll extends Component {
       uid: authUser.uid,
       pollName,
       pollOptions: {
-        pollOption1,
-        pollOption2,
-        pollOption3
+        opt1: {
+          name:pollOption1,
+          selected: false
+        },
+        opt2: {
+          name:pollOption2,
+          selected: false
+        },
+        opt3: {
+          name:pollOption3,
+          selected: false
+        },
+        
       },
       poll_active: true
     };
 
-    // Get a key for a new Poll.
+    // Gera uma nova chave para uma nova enquete
     var newPollKey = firebase.database().ref().child('polls').push().key;
 
-    // Write the new post's data simultaneously in the posts list and the user's post list.
+    //Escreve um novo dado de chave simultaneamente na lista de chave e da lista de enquete de usuário
     var updates = {};
     updates['/polls/' + newPollKey] = postData;
     updates['/user-polls/' + authUser.uid + '/' + newPollKey] = postData;
@@ -78,6 +90,9 @@ class CreatePoll extends Component {
     db.doCreatePoll(updates)
       .then(() => {
         this.setState({ ...INITIAL_STATE });
+        db.onceGetPolls().then(snapshot =>
+          onSetPolls(snapshot.val())
+        );
         this.handleClose()
         
       })
@@ -92,8 +107,8 @@ class CreatePoll extends Component {
 
   render() {
     
-    const { classes } = this.props;
-
+    const { classes, polls } = this.props;
+    
     const {
       pollName,
       pollOption1,
@@ -152,8 +167,8 @@ class CreatePoll extends Component {
               />                                             
           </DialogContent>
           <DialogActions>
-          <Button onClick={ this.onSubmit } disabled={isInvalid} color="primary">
-              Criar
+            <Button onClick={ this.onSubmit } disabled={isInvalid} color="primary">
+                Criar
             </Button>  
             <Button onClick={this.handleClose} color="primary">
               Cancelar
@@ -175,4 +190,16 @@ const styles = theme => ({
   }
 });
 
-export default withStyles(styles)(CreatePoll);
+const mapStateToProps = (state) => ({
+  polls: state.pollState.polls,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  onSetPolls: (polls) => dispatch({ type: 'POLLS_SET', polls }),
+});
+
+
+export default compose(
+  withStyles(styles),
+  connect(mapStateToProps, mapDispatchToProps)
+)(CreatePoll);
