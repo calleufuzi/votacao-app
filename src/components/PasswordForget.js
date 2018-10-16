@@ -125,7 +125,7 @@ class PasswordForgetForm extends Component {
 
 const PasswordForgetLink = () =>
   <Typography align="center" variant="subtitle1">
-    <Link to={routes.PASSWORD_FORGET}>Forgot Password?</Link>
+    <Link to={routes.PASSWORD_FORGET}>Esqueceu a senha?</Link>
   </Typography>
 
 export default PasswordForgetPage;

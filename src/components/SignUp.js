@@ -132,7 +132,7 @@ class SignUpForm extends Component {
                 <PersonAddIcon fontSize="large" />
               </Avatar>            
             </div>      
-            <Typography color="textPrimary" variant="h5" align="center">SingUp</Typography>
+            <Typography color="textPrimary" variant="h5" align="center">Criar Conta</Typography>
             <form onSubmit={this.onSubmit}>
             <TextField
                 label="Nome Completo"
@@ -177,7 +177,7 @@ class SignUpForm extends Component {
               />             
               <div style={styles.container}>
                 <Link to={routes.LANDING}> <Button  type="submit" color="secondary" size="large">Cancelar</Button></Link>
-                <Button  disabled={isInvalid} type="submit" color="primary" size="large">Sign Up</Button>            
+                <Button  disabled={isInvalid} type="submit" color="primary" size="large">Criar Conta</Button>            
               </div>   
               { error && <p>{error.message}</p> }         
             </form>                                         
@@ -193,9 +193,9 @@ class SignUpForm extends Component {
 
 const SignUpLink = () =>
   <Typography>
-    Don't have an account?
+    Não possui uma conta?
     {' '}
-    <Link to={routes.SIGN_UP}>Sign Up</Link>
+    <Link to={routes.SIGN_UP}>Criar Conta</Link>
   </Typography>
 
 export default withRouter(SignUpPage);

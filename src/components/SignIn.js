@@ -111,7 +111,7 @@ class SignInForm extends Component {
                 <PersonIcon fontSize="large" />
               </Avatar>            
             </div>
-            <Typography color="textPrimary" variant="h5" align="center">SignIn</Typography>
+            <Typography color="textPrimary" variant="h5" align="center">Entrar</Typography>
             <form style={styles.form} onSubmit={this.onSubmit}>
               <TextField
                 label="Email Adress"
@@ -138,7 +138,7 @@ class SignInForm extends Component {
               />             
               { error && <Typography>{error.message}</Typography> }
               <div style={styles.container}>
-                <Button fullWidth disabled={isInvalid} type="submit" color="primary" size="large">Sign In</Button>
+                <Button fullWidth disabled={isInvalid} type="submit" color="primary" size="large">Entrar</Button>
                 <PasswordForgetLink />
               </div>
           </form>
