@@ -63,19 +63,18 @@ class CreatePoll extends Component {
       pollOptions: [
         {
           name:pollOption1,
-          selected: false
+          votes: 0
         },
         {
           name:pollOption2,
-          selected: false
-        },
+          votes: 0        },
         {
           name:pollOption3,
-          selected: false
-        },
+          votes: 0        },
         
       ],
-      poll_active: true
+      poll_active: true,
+      created_at: Date.now()
     };
 
     // Gera uma nova chave para uma nova enquete
