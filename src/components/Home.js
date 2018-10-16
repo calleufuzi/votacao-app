@@ -83,22 +83,24 @@ class HomePage extends Component {
   render() {
     let { polls,classes } = this.props;
     return (
-      <div>
-        <h1>Home</h1>
-        <Grid container spacing={16}> 
+      <div className={classes.root}>
+      <Grid>
+        <Typography className={classes.title} variant='h2'>Enquetes</Typography>
+      </Grid>
+        <Grid container wrap='wrap' alignContent='space-around'> 
           {!!polls && Object.keys(polls).map(key => {
               return (
-                  <Grid key={key} item>
-                    <Card className={classes.cards}>
+                  <Grid className={classes.item} key={key} item xs sm>
+                    <Card className={classes.card}>
                       <CardContent>
-                        <Typography>Author: {polls[key].author}</Typography>
+                        <Typography variant='caption' >Criado por: {polls[key].author}</Typography>
                         {
                           <FormControl component="fieldset">
-                            <FormLabel component="legend">{polls[key].pollName}</FormLabel>
+                            <FormLabel className={classes.inputTitle} component="legend">{polls[key].pollName}</FormLabel>
                             { 
                               Object.keys(polls[key].pollOptions).map((obj,k) => {
                                 return( 
-                                  <div key={k}>
+                                  <div key={k} className={classes.inputContainer}>
                                     <label>{polls[key].pollOptions[obj].name}</label>
                                     <input 
                                       type="radio"
@@ -106,6 +108,7 @@ class HomePage extends Component {
                                       value={polls[key].pollOptions[obj].name}
                                       checked={true}
                                       onChange={this.onInputChange}
+                                      className={classes.radio}
                                     />
                                   </div>
                                 )
@@ -138,8 +141,28 @@ const styles = theme => ({
     bottom: theme.spacing.unit * 2,
     right: theme.spacing.unit * 2,
   },
-  cards: {
+  item: {
+    padding: theme.spacing.unit,
+  },
+  card: {
+    minWidth: 300
+  },
+  root: {
+    flexGrow: 1,
+    position:'relative'
+  },
+  title: {
     margin: theme.spacing.unit,
+    float:'left'
+  },
+  inputContainer: {
+    margin: theme.spacing.unit
+  },
+  inputTitle: {
+    padding: theme.spacing.unit
+  },
+  radio: {
+    margin: theme.spacing.unit
   }
 });
 

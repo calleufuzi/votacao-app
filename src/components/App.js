@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
+import CssBaseline from '@material-ui/core/CssBaseline';
 
 import Navigation from "./Navigation";
 import LandingPage from "./Landing";
@@ -39,23 +40,25 @@ class App extends Component {
   render() {
     return (
       <MuiThemeProvider theme={theme}>
-        <Router>
-          <div>
-            <Navigation />
-            <div style={{marginTop:64}}>
-              <Route exact path={routes.LANDING} component={LandingPage} />
-              <Route exact path={routes.SIGN_UP} component={SignUpPage} />
-              <Route exact path={routes.SIGN_IN} component={SignInPage} />
-              <Route
-                exact
-                path={routes.PASSWORD_FORGET}
-                component={PasswordForgetPage}
-              />
-              <Route exact path={routes.HOME} component={HomePage} />
-              <Route exact path={routes.ACCOUNT} component={AccountPage} />
+        <CssBaseline>
+          <Router>
+            <div>
+              <Navigation />
+              <div style={{marginTop:64}}>
+                <Route exact path={routes.LANDING} component={LandingPage} />
+                <Route exact path={routes.SIGN_UP} component={SignUpPage} />
+                <Route exact path={routes.SIGN_IN} component={SignInPage} />
+                <Route
+                  exact
+                  path={routes.PASSWORD_FORGET}
+                  component={PasswordForgetPage}
+                />
+                <Route exact path={routes.HOME} component={HomePage} />
+                <Route exact path={routes.ACCOUNT} component={AccountPage} />
+              </div>
             </div>
-          </div>
-        </Router>
+          </Router>
+        </CssBaseline>
       </MuiThemeProvider>
     );
   }

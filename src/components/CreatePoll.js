@@ -167,12 +167,12 @@ class CreatePoll extends Component {
               />                                             
           </DialogContent>
           <DialogActions>
-            <Button onClick={ this.onSubmit } disabled={isInvalid} color="primary">
-                Criar
-            </Button>  
-            <Button onClick={this.handleClose} color="primary">
+          <Button onClick={this.handleClose} color="primary">
               Cancelar
             </Button>
+            <Button variant="contained" onClick={ this.onSubmit } disabled={isInvalid} color="primary">
+                Criar
+            </Button>  
           </DialogActions>
         </Dialog>
       </div>
@@ -181,7 +181,7 @@ class CreatePoll extends Component {
 }
 const styles = theme => ({
   fab: {
-    position: 'absolute',
+    position: 'fixed',
     bottom: theme.spacing.unit * 2,
     right: theme.spacing.unit * 2,
   },
