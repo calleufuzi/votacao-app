@@ -60,21 +60,21 @@ class CreatePoll extends Component {
       author: authUser.email,
       uid: authUser.uid,
       pollName,
-      pollOptions: {
-        opt1: {
+      pollOptions: [
+        {
           name:pollOption1,
           selected: false
         },
-        opt2: {
+        {
           name:pollOption2,
           selected: false
         },
-        opt3: {
+        {
           name:pollOption3,
           selected: false
         },
         
-      },
+      ],
       poll_active: true
     };
 
@@ -107,7 +107,7 @@ class CreatePoll extends Component {
 
   render() {
     
-    const { classes, polls } = this.props;
+    const { classes } = this.props;
     
     const {
       pollName,

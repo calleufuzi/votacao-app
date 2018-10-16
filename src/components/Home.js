@@ -22,11 +22,13 @@ class HomePage extends Component {
     super(props);
 
     this.state = {
-      polls: null,
+      polls: [],
       users: null,
       show: false,
-      value: ''
+      value: '',
+      selected: { },
     };
+    this.onInputChange.bind(this)
   }
 
   showModal = () => {
@@ -37,8 +39,29 @@ class HomePage extends Component {
     this.setState({ show: false });
   };
   handleChange = event => {
-    this.setState({ value: event.target.value });
+    this.setState({ 
+      value: event.target.value
+      });
   };
+  onInputChange = ({ target }) => {
+    let { polls } = this.props;
+    const nexState = Object.keys(polls).map(poll => {
+      if (polls[poll].pollName !== target.name) return poll;
+      return {
+        ...polls[poll],
+        pollOptions: polls[poll].pollOptions.map(opt => {
+          const checked = opt.name === target.value;
+          return {
+            ...opt,
+            selected: checked
+          }
+        })
+      }
+    });
+    polls =  [...nexState]
+    console.log(polls)
+  }
+  
 
   componentDidMount() {
     const { onSetUsers,onSetPolls } = this.props;
@@ -51,14 +74,12 @@ class HomePage extends Component {
     );
     
   }
-
+  
   render() {
-    const { users, polls } = this.props;
+    let { polls } = this.props;
     return (
       <div>
         <h1>Home</h1>
-        {/* <p>The Home Page is accessible by every signed in user.</p>
-        { !!users && <UserList users={users} /> } */}
         {!!polls && Object.keys(polls).map(key => {
             return (
               <List key={key}>
@@ -67,29 +88,30 @@ class HomePage extends Component {
                   {
                     <FormControl component="fieldset">
                       <FormLabel component="legend">{polls[key].pollName}</FormLabel>
-                      <RadioGroup
-                              aria-label={polls[key].pollOptions}
-                              name={polls[key].pollName}
-                              value={this.state.value}
-                              onChange={this.handleChange}
-                            >
                       { 
-                        Object.keys(polls[key].pollOptions).map(k => {
-                          console.log(polls[key].pollOptions[k].name)
-                          return(                   
-                              <FormControlLabel key={k} value={polls[key].pollOptions[k].name} control={<Radio />} label={polls[key].pollOptions[k].name} /> 
-                            )
+                        Object.keys(polls[key].pollOptions).map((obj,k) => {
+                          return( 
+                            <div key={k}>
+                              <label>{polls[key].pollOptions[obj].name}</label>
+                              <input 
+                                type="radio"
+                                name={polls[key].pollName}
+                                value={polls[key].pollOptions[obj].name}
+                                checked={true}
+                                onChange={this.onInputChange}
+                              />
+                            </div>
+                          )
                         })     
-                      }      
-                        </RadioGroup>          
+                      }              
                     </FormControl>                    
-
-                 }
+                  }
                 </ListItem>
               </List>
             )
           }
           )}
+
         <PollModal />
       </div>
     );
@@ -106,16 +128,6 @@ const styles = theme => ({
     right: theme.spacing.unit * 2,
   },
 });
-
-const UserList = ({ users }) =>
-  <div>
-    <h2>List of Usernames of Users</h2>
-    <p>(Saved on Sign Up in Firebase Database)</p>
-
-    {Object.keys(users).map(key =>
-      <div key={key}>{users[key].username}</div>
-    )}
-  </div>
 
 const mapStateToProps = (state) => ({
   users: state.userState.users,
