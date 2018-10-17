@@ -1,7 +1,6 @@
 import React, { Fragment} from 'react';
 import { connect } from 'react-redux';
 import { compose } from 'recompose';
-
 import { PasswordForgetForm } from './PasswordForget';
 import PasswordChangeForm from './PasswordChange';
 import withAuthorization from './withAuthorization';

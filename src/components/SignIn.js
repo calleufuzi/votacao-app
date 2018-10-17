@@ -101,7 +101,6 @@ class SignInForm extends Component {
         marginTop: 8
       }
     };
-
     return (
       <div style={styles.container}>
         <Card style={styles.card}>
