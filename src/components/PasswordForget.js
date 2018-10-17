@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-
 import { auth } from '../firebase';
 import * as routes from '../constants/routes';
-
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import Button from '@material-ui/core/Button';
@@ -113,7 +111,7 @@ class PasswordForgetForm extends Component {
                 <Link to={routes.LANDING}> <Button  type="submit" color="secondary" size="large">Cancelar</Button></Link>
                 <Button fullWidth disabled={isInvalid} type="submit" color="primary" size="large">Resetar Minha Senha</Button>      
               </div> 
-              { error && <p>{error.message}</p> }
+              { error && <Typography color="error" align="center">{error.message}</Typography> }
             </form>
           </CardContent>
         </Card>

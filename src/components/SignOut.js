@@ -9,13 +9,10 @@ import { auth } from '../firebase';
 
 const styles = theme => ({
   button: {
-    margin: theme.spacing.unit,
+    padding: theme.spacing.unit,
   },
   leftIcon: {
     marginRight: theme.spacing.unit,
-  },
-  rightIcon: {
-    marginLeft: theme.spacing.unit,
   },
   iconSmall: {
     fontSize: 20,
@@ -28,12 +25,12 @@ const SignOutButton = (props) => {
     <Button
       type="button"
       onClick={auth.doSignOut}
-      fullWidth
       color='primary'
       style={styles.button}
       className={classes.button}
+      fullWidth
     >
-    <ExitIcon className={classes.leftIcon}/>
+      <ExitIcon className={classes.leftIcon}/>
       Deslogar
     </Button>
   )

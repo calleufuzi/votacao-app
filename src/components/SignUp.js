@@ -6,7 +6,6 @@ import {
 import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
 import Card from '@material-ui/core/Card';
-import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import Button from '@material-ui/core/Button';
 import PersonAddIcon from '@material-ui/icons/PersonAdd';
@@ -86,6 +85,7 @@ class SignUpForm extends Component {
       passwordOne === '' ||
       email === '' ||
       username === '';
+
     const styles = {
       card: {
         minWidth: 320,
@@ -179,12 +179,9 @@ class SignUpForm extends Component {
                 <Link to={routes.LANDING}> <Button  type="submit" color="secondary" size="large">Cancelar</Button></Link>
                 <Button  disabled={isInvalid} type="submit" color="primary" size="large">Criar Conta</Button>            
               </div>   
-              { error && <p>{error.message}</p> }         
+              { error && <Typography color="error" align="center">{error.message}</Typography> }         
             </form>                                         
           </CardContent>
-          <CardActions>
-  
-          </CardActions>
         </Card>  
       </div>
     );
@@ -192,7 +189,7 @@ class SignUpForm extends Component {
 }
 
 const SignUpLink = () =>
-  <Typography>
+  <Typography color="primary">
     Não possui uma conta?
     {' '}
     <Link to={routes.SIGN_UP}>Criar Conta</Link>

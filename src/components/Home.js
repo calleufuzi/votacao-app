@@ -14,12 +14,9 @@ import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
-
-
-
-
 import withAuthorization from './withAuthorization';
 import { db } from '../firebase';
+import { POLLS_SET ,POLL_VOTE, USERS_SET } from '../actions/actionTypes'
 
 class HomePage extends Component {
   constructor(props) {
@@ -32,7 +29,6 @@ class HomePage extends Component {
       value: '',
       selected: { },
     };
-    this.onInputChange.bind(this)
   }
 
   showModal = () => {
@@ -47,27 +43,30 @@ class HomePage extends Component {
       value: event.target.value
       });
   };
-
   onInputChange = ({ target }) => {
-    let { polls } = this.props;
+    const { polls, onPollVote, onSetPolls } = this.props;
     const nexState = Object.keys(polls).map(poll => {
-      if (polls[poll].pollName !== target.name) return poll;
+      if (polls[poll].pollName !== target.name) return polls[poll];
       return {
         ...polls[poll],
         pollOptions: polls[poll].pollOptions.map(opt => {
-          const checked = opt.name === target.value;
+          const vote = opt.name === target.value? +1 : +0;
           return {
             ...opt,
-            selected: checked
+            votes: vote
           }
         })
       }
     });
-    polls =  [...nexState]
-    console.log(polls)
+    console.log(nexState)
+    // db.UpdatePolls(nexState)
+    // .then(()=> {
+    //   db.onceGetPolls().then(snapshot =>
+    //     onSetPolls(snapshot.val())
+    //   );
+    // }) 
   }
   
-
   componentDidMount() {
     const { onSetUsers,onSetPolls } = this.props;
     
@@ -81,50 +80,50 @@ class HomePage extends Component {
   }
   
   render() {
-    let { polls,classes } = this.props;
+    let { polls, classes } = this.props;
     return (
       <div className={classes.root}>
-      <Grid>
-        <Typography className={classes.title} variant='h2'>Enquetes</Typography>
-      </Grid>
+        <Grid>
+          <Typography className={classes.title} variant='h2'>Enquetes</Typography>
+        </Grid>
         <Grid container wrap='wrap' alignContent='space-around'> 
           {!!polls && Object.keys(polls).map(key => {
               return (
-                  <Grid className={classes.item} key={key} item xs sm>
-                    <Card className={classes.card}>
-                      <CardContent>
-                        <Typography variant='caption' >Criado por: {polls[key].author}</Typography>
-                        {
-                          <FormControl component="fieldset">
-                            <FormLabel className={classes.inputTitle} component="legend">{polls[key].pollName}</FormLabel>
-                            { 
-                              Object.keys(polls[key].pollOptions).map((obj,k) => {
-                                return( 
-                                  <div key={k} className={classes.inputContainer}>
-                                    <label>{polls[key].pollOptions[obj].name}</label>
-                                    <input 
-                                      type="radio"
-                                      name={polls[key].pollName}
-                                      value={polls[key].pollOptions[obj].name}
-                                      checked={true}
-                                      onChange={this.onInputChange}
-                                      className={classes.radio}
-                                    />
-                                  </div>
-                                )
-                              })     
-                            }  
-                          </FormControl>    
-                        }             
-                      </CardContent>
-                      <CardActions>
-                        <Button fullWidth className={classes.button} color="primary" size="large">Votar</Button>
-                      </CardActions>
-                    </Card>
-                  </Grid>
+                <Grid className={classes.item} key={key} item xs sm>
+                  <Card className={classes.card}>
+                    <CardContent>
+                      <Typography variant='caption' >Criado por: {polls[key].author}</Typography>
+                      {
+                        <FormControl component="fieldset">
+                          <FormLabel className={classes.inputTitle} component="legend">{polls[key].pollName}</FormLabel>
+                          { 
+                            Object.keys(polls[key].pollOptions).map((obj,k) => {
+                              return( 
+                                <div key={k} className={classes.inputContainer}>
+                                  <label>{polls[key].pollOptions[obj].name}</label>
+                                  <input 
+                                    type="radio"
+                                    name={polls[key].pollName}
+                                    value={polls[key].pollOptions[obj].name}
+                                    // checked={true}
+                                    onChange={this.onInputChange}
+                                    className={classes.radio}
+                                  />
+                                </div>
+                              )
+                            })     
+                          }  
+                        </FormControl>    
+                      }             
+                    </CardContent>
+                    <CardActions>
+                      <Button fullWidth className={classes.button} color="primary" size="large">Votar</Button>
+                    </CardActions>
+                  </Card>
+                </Grid>
               )
             }
-            )}
+          )}
         </Grid>    
         <PollModal />
       </div>
@@ -172,8 +171,10 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  onSetUsers: (users) => dispatch({ type: 'USERS_SET', users }),
-  onSetPolls: (polls) => dispatch({ type: 'POLLS_SET', polls }),
+  onSetUsers: (users) => dispatch({ type: USERS_SET , users }),
+  onSetPolls: (polls) => dispatch({ type: POLLS_SET, polls }),
+  onPollVote: (poll) => dispatch({ type: POLL_VOTE, poll })
+  
 });
 
 const authCondition = (authUser) => !!authUser;

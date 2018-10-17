@@ -1,3 +1,5 @@
+import { AUTH_USER_SET } from '../actions/actionTypes'
+
 const INITIAL_STATE = {
   authUser: null,
 };
@@ -9,7 +11,7 @@ const applySetAuthUser = (state, action) => ({
 
 function sessionReducer(state = INITIAL_STATE, action) {
   switch(action.type) {
-    case 'AUTH_USER_SET' : {
+    case AUTH_USER_SET : {
       return applySetAuthUser(state, action);
     }
     default : return state;

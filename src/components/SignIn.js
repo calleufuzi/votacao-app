@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
+import Grid from '@material-ui/core/Grid';
 import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
@@ -8,9 +9,6 @@ import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
 import PersonIcon from '@material-ui/icons/Person';
 import Avatar from '@material-ui/core/Avatar';
-
-
-
 import { SignUpLink } from './SignUp';
 import { PasswordForgetLink } from './PasswordForget';
 import { auth } from '../firebase';
@@ -135,17 +133,22 @@ class SignInForm extends Component {
                 autoComplete="current-password"
                 fullWidth
               />             
-              { error && <Typography>{error.message}</Typography> }
+              { error && <Typography color="error">{error.message}</Typography> }
               <div style={styles.container}>
                 <Button fullWidth disabled={isInvalid} type="submit" color="primary" size="large">Entrar</Button>
-                <PasswordForgetLink />
               </div>
           </form>
           </CardContent>
           <CardActions>
-            <div style={styles.container}>
-              <SignUpLink />
-            </div>
+            
+            <Grid container direction="column" spacing={8}>
+              <Grid item >
+                <PasswordForgetLink />
+              </Grid>
+              <Grid item >
+                <SignUpLink />
+              </Grid>
+            </Grid>
           </CardActions>
         </Card>
       </div>

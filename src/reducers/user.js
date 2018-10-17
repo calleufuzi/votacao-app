@@ -1,3 +1,5 @@
+import { USERS_SET } from '../actions/actionTypes'
+
 const INITIAL_STATE = {
   users: {},
 };
@@ -9,7 +11,7 @@ const applySetUsers = (state, action) => ({
 
 function userReducer(state = INITIAL_STATE, action) {
   switch(action.type) {
-    case 'USERS_SET' : {
+    case USERS_SET : {
       return applySetUsers(state, action);
     }
     default : return state;

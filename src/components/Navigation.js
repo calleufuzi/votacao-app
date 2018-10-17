@@ -53,6 +53,7 @@ const Navigation = ({ authUser }) =>
   </div>
   
 class NavigationAuth extends Component {
+
   state = {
     anchorEl: null,
     open: false,
@@ -74,6 +75,7 @@ class NavigationAuth extends Component {
   };
 
   render () {
+    
     const { anchorEl } = this.state;
     const open = Boolean(anchorEl);
 
@@ -110,16 +112,15 @@ class NavigationAuth extends Component {
     );
     return (     
       <div style={styles.root}>
-      <Drawer open={this.state.left} onClose={this.toggleDrawer('left', false)}>
-        <div
-          tabIndex={0}
-          role="button"
-          onClick={this.toggleDrawer('left', false)}
-          onKeyDown={this.toggleDrawer('left', false)}
-        >
-          {sideList}
-        </div>
-      </Drawer>       
+        <Drawer open={this.state.left} onClose={this.toggleDrawer('left', false)}>
+          <div
+            tabIndex={0}
+            role="button"
+            onClick={this.toggleDrawer('left', false)}
+          >
+            {sideList}
+          </div>
+        </Drawer>       
         <AppBar>
           <Toolbar>
             <IconButton onClick={this.toggleDrawer('left', true)} style={styles.menuButton} aria-label="Menu">
@@ -129,32 +130,31 @@ class NavigationAuth extends Component {
               Owl Poll
             </Typography>
             <div>
-            <IconButton 
-              aria-owns={open ? 'menu-appbar' : null}
-              aria-haspopup="true"
-              onClick={this.handleMenu}
-              color="inherit"
-            >
-              <AccountCircle />
-            </IconButton>
-            <Menu
-              id="menu-appbar"
-              anchorEl={anchorEl}
-              anchorOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
-              }}
-              transformOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
-              }}
-              open={open}
-              onClose={this.handleClose}
-            >
-              <MenuItem onClick={this.handleClose}>Profile</MenuItem>
-              <MenuItem onClick={this.handleClose}><Link to={routes.ACCOUNT}>Account</Link></MenuItem>
-            </Menu>
-          </div>
+              <IconButton 
+                aria-owns={open ? 'menu-appbar' : null}
+                aria-haspopup="true"
+                onClick={this.handleMenu}
+                color="inherit"
+              >
+                <AccountCircle />
+              </IconButton>
+              <Menu
+                id="menu-appbar"
+                anchorEl={anchorEl}
+                anchorOrigin={{
+                  vertical: 'top',
+                  horizontal: 'right',
+                }}
+                transformOrigin={{
+                  vertical: 'top',
+                  horizontal: 'right',
+                }}
+                open={open}
+                onClose={this.handleClose}
+              >
+                <MenuItem onClick={this.handleClose}><Link to={routes.ACCOUNT}>Account</Link></MenuItem>
+              </Menu>
+             </div>
           </Toolbar>
         </AppBar>  
       </div>

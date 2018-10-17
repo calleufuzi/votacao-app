@@ -16,3 +16,6 @@ export const doCreatePoll = (data) =>
 
   export const onceGetPolls = () =>
   db.ref('polls').once('value');  
+
+  export const UpdatePolls = (data) => 
+    db.ref('polls').set(data);

@@ -92,37 +92,37 @@ class PasswordChangeForm extends Component {
       <div style={styles.container}>
         <Card style={styles.card}>
           <CardContent>
-          <div style={styles.row}>
+            <div style={styles.row}>
               <Avatar style={styles.avatar} >
                 <Lock fontSize="large" />
               </Avatar>            
             </div>
             <Typography color="textPrimary" variant="h5" align="center">Trocar a Senha</Typography>            
             <form style={styles.form} onSubmit={this.onSubmit}>
-            <TextField
-                label="Nova Senha"
-                value={passwordOne}
-                onChange={event => this.setState(byPropKey('passwordOne', event.target.value))}
-                margin="normal"
-                variant="outlined"
-                type="password"
-                name="Senha 1"
-                fullWidth
-              />  
-            <TextField
-                label="Confirme a Nova Senha"
-                value={passwordTwo}
-                onChange={event => this.setState(byPropKey('passwordTwo', event.target.value))}
-                margin="normal"
-                variant="outlined"
-                type="password"
-                name="Senha 2"
-                fullWidth
-              />                
-              <div style={styles.row}>
-                <Button fullWidth disabled={isInvalid} type="submit" color="primary" size="large">Mudar a Senha</Button>      
-              </div> 
-              { error && <p>{error.message}</p> }
+              <TextField
+                  label="Nova Senha"
+                  value={passwordOne}
+                  onChange={event => this.setState(byPropKey('passwordOne', event.target.value))}
+                  margin="normal"
+                  variant="outlined"
+                  type="password"
+                  name="Senha 1"
+                  fullWidth
+                />  
+              <TextField
+                  label="Confirme a Nova Senha"
+                  value={passwordTwo}
+                  onChange={event => this.setState(byPropKey('passwordTwo', event.target.value))}
+                  margin="normal"
+                  variant="outlined"
+                  type="password"
+                  name="Senha 2"
+                  fullWidth
+                />                
+                <div style={styles.row}>
+                  <Button fullWidth disabled={isInvalid} type="submit" color="primary" size="large">Mudar a Senha</Button>      
+                </div> 
+                { error && <p>{error.message}</p> }
             </form>
           </CardContent>
         </Card>

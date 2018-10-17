@@ -6,7 +6,7 @@ export const doCreateUserWithEmailAndPassword = (email, password) =>
 
 // Login
 export const doSignInWithEmailAndPassword = (email, password) =>
-auth.signInWithEmailAndPassword(email, password);
+  auth.signInWithEmailAndPassword(email, password);
 
 // Deslogar
 export const doSignOut = () =>
@@ -14,8 +14,8 @@ export const doSignOut = () =>
 
 // Redefinição de Senha
 export const doPasswordReset = (email) =>
-auth.sendPasswordResetEmail(email);
+  auth.sendPasswordResetEmail(email);
 
 // Troca de Senha
 export const doPasswordUpdate = (password) =>
-auth.currentUser.updatePassword(password);
+  auth.currentUser.updatePassword(password);
