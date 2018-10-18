@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
+import firebase from 'firebase/app';
 import Grid from '@material-ui/core/Grid';
 import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
@@ -13,6 +14,7 @@ import { SignUpLink } from './SignUp';
 import { PasswordForgetLink } from './PasswordForget';
 import { auth } from '../firebase';
 import * as routes from '../constants/routes';
+
 
 const SignInPage = ({ history }) =>
   <div>
@@ -56,6 +58,37 @@ class SignInForm extends Component {
       });
 
     event.preventDefault();
+  }
+
+  onTweeterAuth = () => {
+    const {
+      history,
+    } = this.props;
+    const provider = new firebase.auth.TwitterAuthProvider();
+
+    firebase.auth().signInWithPopup(provider).then(function(result) {
+      // This gives you a the Twitter OAuth 1.0 Access Token and Secret.
+      // You can use these server side with your app's credentials to access the Twitter API.
+      var token = result.credential.accessToken;
+      var secret = result.credential.secret;
+      // The signed-in user info.
+      var user = result.user;
+      console.log(user)
+      console.log(token)
+      console.log(secret)
+      history.push(routes.HOME);
+      // ...
+    }).catch((error) => {
+      // Handle Errors here.
+      var errorCode = error.code;
+      var errorMessage = error.message;
+      // The email of the user's account used.
+      var email = error.email;
+      // The firebase.auth.AuthCredential type that was used.
+      var credential = error.credential;
+      this.setState(byPropKey('error', error));
+    })
+
   }
 
   render() {
@@ -140,8 +173,10 @@ class SignInForm extends Component {
           </form>
           </CardContent>
           <CardActions>
-            
             <Grid container direction="column" spacing={8}>
+              <Grid item > 
+                <Button onClick={() => this.onTweeterAuth()} fullWidth variant="contained" type="submit" color="secondary" size="large">Twitter</Button>
+              </Grid>
               <Grid item >
                 <PasswordForgetLink />
               </Grid>

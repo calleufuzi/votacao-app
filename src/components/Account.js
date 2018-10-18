@@ -4,6 +4,7 @@ import { compose } from 'recompose';
 import { PasswordForgetForm } from './PasswordForget';
 import PasswordChangeForm from './PasswordChange';
 import withAuthorization from './withAuthorization';
+import Typography from '@material-ui/core/Typography'
 
 const styles = {
   container: {
@@ -14,7 +15,6 @@ const AccountPage = ({ authUser }) => {
   return (
     <Fragment>
       <div style={styles.container}>
-        {/* <h1>Account: {authUser.email}</h1> */}
         <PasswordForgetForm />
         <PasswordChangeForm />
       </div>

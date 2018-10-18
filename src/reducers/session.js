@@ -2,11 +2,15 @@ import { AUTH_USER_SET } from '../actions/actionTypes'
 
 const INITIAL_STATE = {
   authUser: null,
+  token: null,
+  secret: null
 };
 
 const applySetAuthUser = (state, action) => ({
   ...state,
-  authUser: action.authUser
+  authUser: action.authUser,
+  token: action.token,
+  secret: action.secret
 });
 
 function sessionReducer(state = INITIAL_STATE, action) {

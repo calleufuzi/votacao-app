@@ -1,5 +1,6 @@
 import { auth } from './firebase';
 
+
 // Cadastro
 export const doCreateUserWithEmailAndPassword = (email, password) =>
   auth.createUserWithEmailAndPassword(email, password);
@@ -8,7 +9,7 @@ export const doCreateUserWithEmailAndPassword = (email, password) =>
 export const doSignInWithEmailAndPassword = (email, password) =>
   auth.signInWithEmailAndPassword(email, password);
 
-// Deslogar
+  // Deslogar
 export const doSignOut = () =>
   auth.signOut();
 

@@ -17,6 +17,7 @@ import Typography from '@material-ui/core/Typography';
 import withAuthorization from './withAuthorization';
 import { db } from '../firebase';
 import { POLLS_SET ,POLL_VOTE, USERS_SET } from '../actions/actionTypes'
+import Twit from 'twit'
 
 class HomePage extends Component {
   constructor(props) {
@@ -80,11 +81,11 @@ class HomePage extends Component {
   }
   
   render() {
-    let { polls, classes } = this.props;
+    let { polls, classes, authUser } = this.props;
     return (
       <div className={classes.root}>
         <Grid>
-          <Typography className={classes.title} variant='h2'>Enquetes</Typography>
+          <Typography className={classes.title} variant='h2'>{console.log(authUser)}</Typography>
         </Grid>
         <Grid container wrap='wrap' alignContent='space-around'> 
           {!!polls && Object.keys(polls).map(key => {
@@ -166,8 +167,11 @@ const styles = theme => ({
 });
 
 const mapStateToProps = (state) => ({
+  authUser: state.sessionState.authUser,
   users: state.userState.users,
   polls: state.pollState.polls,
+  token: state.sessionState.token,
+  secret: state.sessionState.secret,
 });
 
 const mapDispatchToProps = (dispatch) => ({

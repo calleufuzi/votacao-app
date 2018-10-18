@@ -1,4 +1,4 @@
-import { POLLS_SET,POLL_VOTE } from '../actions/actionTypes'
+import { POLLS_SET, POLL_VOTE } from '../actions/actionTypes'
 
 const INITIAL_STATE = {
   polls: {},

@@ -10,9 +10,12 @@ const withAuthentication = (Component) => {
 
       this.state = {
         authUser: null,
+        token: null,
+        secret: null
       };
     }
-
+    // 391660714-J4U6WyGp1p4CUlIoxy1RQRFBy43gfXIOvDBJQ6bJ
+    // SignIn.js:78 grUlcaSxusZ5ZypyQcXT1h9GvDoXqYOMyxNJqf8AdfjnA
     componentDidMount() {
       const { onSetAuthUser } = this.props;
 
